@@ -1,0 +1,23 @@
+<div align="center" class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" >&times;</span>
+            </button>
+            <h2 class="modal-title">ELiminar Matricula</h2>
+
+                <form action="{% url 'eliminar_matricula' object.id %}" method="post">
+                    {% csrf_token %}
+                    <p><strong>¿Desea eliminar estudiante Matriculado?</strong></p>
+                    <h3>{{ object.num_matricula }} {{ object.fk_estudiante }}</h3>
+                    <hr>
+                    <button class="btn btn-danger" type="submit">Confirmar</button>
+                    <a class="btn btn-primary" href="{% url 'listar_matricula' %}">Cancelar</a>
+                </form>            
+
+        </div>
+
+        
+    </div>
+</div>

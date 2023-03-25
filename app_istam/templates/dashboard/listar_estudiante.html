@@ -1,0 +1,88 @@
+{% extends 'dashboard/vista_principal.html' %} {% block titulo %} Listado de
+Estudiantes 😎 {% endblock titulo %} {% block body %}
+<div>
+  <button
+    class="btn btn-primary"
+    type="button"
+    onclick="abrir_modal_creacion('{% url 'crear_estudiante' %}')">
+    Nuevo Estudiante
+  </button>
+</div>
+
+{% if estudiantes %}
+<div class="card">
+  <div class="card-header">
+    <strong class="card-title">Listado de Estudiantes</strong>
+  </div>
+  <div class="table-stats order-table ov-h">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Cedula</th>
+          <th>Correo</th>
+          <th>Foto</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in estudiantes %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.nombres }}</td>
+          <td>{{ p.apellidos }}</td>
+          <td>{{ p.cedula }}</td>
+          <td>{{ p.correo }}</td>
+          <td>
+            <img src="/{{ p.foto }}" alt="" />
+          </td>
+          
+          <td>
+            <button
+              class="btn btn-success"
+              onclick="abrir_modal_edicion('{% url 'editar_estudiante' p.id %}')">
+              Editar
+            </button>
+            <button
+              class="btn btn-danger"
+              onclick="abrir_modal_eliminar('{% url 'eliminar_estudiante' p.id %}')">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<h1>No existen estudiantes registrados</h1>
+
+{% endif %}
+
+<div class="modal face" id="creacion" role="dialog"></div>
+<div class="modal face" id="edicion" role="dialog"></div>
+<div class="modal face" id="eliminar" role="dialog"></div>
+
+{% endblock body %} {% block extrajs %}
+<script type="text/javascript">
+  var $ = jQuery.noConflic();
+  function abrir_modal_creacion(url) {
+    $("#creacion").load(url, function () {
+      $(this).modal("show");
+    });
+  }
+  function abrir_modal_edicion(url) {
+    $("#edicion").load(url, function () {
+      $(this).modal("show");
+    });
+  }
+  function abrir_modal_eliminar(url) {
+    $("#eliminar").load(url, function () {
+      $(this).modal("show");
+    });
+  }
+</script>
+{% endblock extrajs %}
